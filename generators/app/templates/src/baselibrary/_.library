@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+<library xmlns="http://www.sap.com/sap.ui.library.xsd">
+	<name><%= name %></name>
+	<vendor><%= author %></vendor>
+	<version>${version}</version>
+	<copyright>${copyright}</copyright>
+	<title><%= name %></title>
+	<documentation>Some description about <%= name %></documentation>
+	<dependencies>
+		<dependency>
+			<libraryName>sap.ui.core</libraryName>
+		</dependency>
+		<dependency>
+			<libraryName>sap.ui.webc.common</libraryName>
+		</dependency>
+	</dependencies>
+</library>
