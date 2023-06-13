@@ -9,7 +9,7 @@
     "karma-cli": "^2.0.0",
     "karma-ui5": "^2.3.3",
     "ui5-middleware-livereload": "^0.5.1",
-    "@ui5/tooling-webc": "0.2.6",
+    "@ui5/tooling-webc": "0.2.7",
     "<%= webComponentsPackageName %>": "<%= webComponentsPackageVersion %>"
   },
   "ui5": {
