@@ -96,8 +96,8 @@ ${chalk.green("../my-package")} (path to a local package, must be relative to: $
         // Local package
         if (s.startsWith(".")) {
           // First, make sure it's a relative path to a parent directory
-          if (!s.startsWith(`..${path.sep}`)) {
-            return `Invalid path - must start with: ..${path.sep}`;
+          if (!s.startsWith(`..`)) {
+            return `Invalid path - a relative path to a parent directory is required (must start with: ..)`;
           }
 
           // Make sure it doesn't contain invalid path characters
@@ -106,6 +106,7 @@ ${chalk.green("../my-package")} (path to a local package, must be relative to: $
           }
 
           // Try to read the package.json of the directory
+          s = s.replace(/\\/g, "/");
           const packageFilePath = path.join(destinationRoot, s, "package.json");
           let packageFile;
           try {
