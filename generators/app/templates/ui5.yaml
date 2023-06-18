@@ -1,6 +1,6 @@
-specVersion: '2.2'
+specVersion: "3.0"
 metadata:
-  name: "<%= name %>"
+  name: <%= libId %>
 type: library
 framework:
   name: <%= framework %>
@@ -10,19 +10,16 @@ framework:
     - name: sap.ui.webc.common
 server:
   customMiddleware:
-  - name: ui5-middleware-livereload
-    afterMiddleware: compression
-    configuration:
-      extraExts: "xml,json,properties"
-      path: ["src", "test"]
+    - name: ui5-middleware-livereload
+      afterMiddleware: compression
 customConfiguration:
   ui5-tooling-webc:
     packages:
-      '<%= webComponentsPackageName %>':
+      "<%= webComponentsPackageName %>":
         aliases: # used to convert ES6 imports to UI5 module paths
-          "^<%= webComponentsPackageName %>\/dist\/(.*?).js$": "<%= libraryURI %>/thirdparty/$1"
+          "^<%= webComponentsPackageName %>\/dist\/(.*?).js$": "<%= libURI %>/thirdparty/$1"
         reverseAliases: # used by the middleware to serve third-party files as UI5 modules
-          "^/resources/<%= libraryURI %>/thirdparty/(.*?)$": "<%= webComponentsPackageName %>/dist/$1"
+          "^/resources/<%= libURI %>/thirdparty/(.*?)$": "<%= webComponentsPackageName %>/dist/$1"
         inputPath: "dist/" # where to find the web components
         inputPathFilters: # relative to the inputPath, can be inclusive or exclusive(!) filters
           - "**/*{.js,.json,.css}"
@@ -30,8 +27,8 @@ customConfiguration:
           - "!test/"
           - "!**/*-static.js"
           - "!**/api.json"
-        outputPath: "src/<%= libraryURI %>/thirdparty/" # where to create the UI5 controls
+        outputPath: "src/<%= libURI %>/thirdparty/" # where to create the UI5 controls
         generation: # if set, control wrappers will be generated
           suffix: ""
           replaceJSDocNamespaces: # replace namespaces in api.json
-              demo.components: <%= name %>
+            demo.components: <%= libId %>
