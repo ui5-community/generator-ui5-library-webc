@@ -111,17 +111,12 @@ export default class extends Generator {
 Examples:
 ${chalk.green("some-package")}, ${chalk.green("@my/my-package")} (no version specified, "latest" will be used),
 ${chalk.green("some-package@2.0.1")}, ${chalk.green("@my/my-package@3.0.0")} (specific version specified)
-${chalk.green("../my-package")} (path to a local package, must be relative to: ${chalk.blue(this.destinationRoot())})
+${chalk.green("./my-package")} (path to a local package, must be relative to: ${chalk.blue(this.destinationRoot())})
 
 `,
 				validate: (s) => {
 					// Local package
 					if (s.startsWith(".")) {
-						// First, make sure it's a relative path to a parent directory
-						if (!s.startsWith(`..`)) {
-							return `Invalid path - a relative path to a parent directory is required (must start with: ..)`;
-						}
-
 						// Make sure it doesn't contain invalid path characters
 						if (!isValidPath(s)) {
 							return "Invalid path";
@@ -158,7 +153,7 @@ ${chalk.green("../my-package")} (path to a local package, must be relative to: $
 
 					return true;
 				},
-				default: "../my-package"
+				default: "./my-package"
 			},
 			{
 				type: "input",
@@ -184,6 +179,11 @@ ${chalk.green("../my-package")} (path to a local package, must be relative to: $
 			// use the namespace and the application name as new subdirectory
 			if (props.newdir) {
 				this.destinationRoot(this.destinationPath(`${props.namespace}`));
+
+				// newdir was selected and the components package uses a relative path
+				if (additionalProps.webComponentsPackageVersion.startsWith(".")) {
+					additionalProps.webComponentsPackageVersion = path.relative(this.destinationPath(), additionalProps.webComponentsPackageVersion);
+				}
 			}
 			delete props.newdir;
 
