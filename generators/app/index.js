@@ -220,7 +220,7 @@ ${chalk.green("./my-package")} (path to a local package, must be relative to: ${
 			})
 			.forEach((file) => {
 				const sOrigin = this.templatePath(file);
-				const sTarget = this.destinationPath(file.replace(/^_/, "").replace("_library_", this.config.get("libURI")).replace(/\/_/, "/"));
+				const sTarget = this.destinationPath(file.replace(/\\/g, "/").replace(/^_/, "").replace("_library_", this.config.get("libURI")).replace(/\/_/, "/"));
 				this.fs.copyTpl(sOrigin, sTarget, this.config.getAll());
 			});
 	}
