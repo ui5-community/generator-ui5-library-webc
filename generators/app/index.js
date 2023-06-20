@@ -182,7 +182,9 @@ ${chalk.green("./my-package")} (path to a local package, must be relative to: ${
 
 				// newdir was selected and the components package uses a relative path
 				if (additionalProps.webComponentsPackageVersion.startsWith(".")) {
-					additionalProps.webComponentsPackageVersion = path.relative(this.destinationPath(), additionalProps.webComponentsPackageVersion);
+					let localPath = path.relative(this.destinationPath(), additionalProps.webComponentsPackageVersion);
+					localPath = localPath.replace(/\\/g, "/");
+					additionalProps.webComponentsPackageVersion = localPath;
 				}
 			}
 			delete props.newdir;
