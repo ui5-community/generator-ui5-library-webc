@@ -6,7 +6,7 @@ Web Components Enablement for `<%= webComponentsPackageName %>`
 
 To prepare your library for the first run, please execute the following commands:
 
-- `npm i`
+- `npm install`
 - `npm run ui5:prebuild` (to transpile the UI5 Web Components code to OpenUI5 code in `thirdparty/`)
 - `npm run generate` (to generate OpenUI5 wrapper controls for the web components in `<%= webComponentsPackageName %>`)
 

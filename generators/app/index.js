@@ -1,4 +1,3 @@
-import path from "path";
 import url from "url";
 import fs from "fs";
 
@@ -8,6 +7,7 @@ import { extractPackageNameAndVersion } from "./utils.js";
 // as dependencies in the package.json (not devDeps!)
 import Generator from "yeoman-generator";
 import yosay from "yosay";
+import upath from "upath";
 import chalk from "chalk";
 import { glob } from "glob";
 import packageJson from "package-json";
@@ -123,8 +123,7 @@ ${chalk.green("./my-package")} (path to a local package, must be relative to: ${
 						}
 
 						// Try to read the package.json of the directory
-						s = s.replace(/\\/g, "/");
-						const packageFilePath = path.join(this.destinationRoot(), s, "package.json");
+						const packageFilePath = upath.join(this.destinationRoot(), s, "package.json");
 						let packageFile;
 						try {
 							packageFile = JSON.parse(fs.readFileSync(packageFilePath, { encoding: "utf8" }));
@@ -182,8 +181,7 @@ ${chalk.green("./my-package")} (path to a local package, must be relative to: ${
 
 				// newdir was selected and the components package uses a relative path
 				if (additionalProps.webComponentsPackageVersion.startsWith(".")) {
-					let localPath = path.relative(this.destinationPath(), additionalProps.webComponentsPackageVersion);
-					localPath = localPath.replace(/\\/g, "/");
+					let localPath = upath.relative(this.destinationPath(), additionalProps.webComponentsPackageVersion);
 					additionalProps.webComponentsPackageVersion = localPath;
 				}
 			}
@@ -212,15 +210,16 @@ ${chalk.green("./my-package")} (path to a local package, must be relative to: ${
 
 	writing() {
 		// write library
-		this.sourceRoot(path.join(__dirname, "templates"));
+		this.sourceRoot(upath.join(__dirname, "templates"));
 		glob
 			.sync("**", {
 				cwd: this.sourceRoot(),
 				nodir: true
 			})
 			.forEach((file) => {
+				file = upath.normalize(file);
 				const sOrigin = this.templatePath(file);
-				const sTarget = this.destinationPath(file.replace(/\\/g, "/").replace(/^_/, "").replace("_library_", this.config.get("libURI")).replace(/\/_/, "/"));
+				const sTarget = this.destinationPath(file.replace(/^_/, "").replace("_library_", this.config.get("libURI")).replace(/\/_/, "/"));
 				this.fs.copyTpl(sOrigin, sTarget, this.config.getAll());
 			});
 	}
@@ -251,7 +250,7 @@ Setup Complete!
 Run:
 
 ${chalk.green(`cd ${this.destinationPath()}
-npm i
+npm install
 npm run ui5:prebuild
 npm run generate
 npm run start`)}
