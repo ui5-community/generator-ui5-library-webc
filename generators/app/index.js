@@ -54,7 +54,7 @@ export default class extends Generator {
 				name: "namespace",
 				message: "What is the namespace of your library?",
 				validate: (s) => {
-					const partInvalid = (part) => !/^[a-zA-Z0-9_]+$/.test(part);
+					const partInvalid = (part) => !/^[a-z0-9_]+$/.test(part);
 					const parts = s.split(".");
 					if (parts.length < 2) {
 						return `A full library name is required (namespace included), please use at least one ${chalk.green(".")} character - f.e. ${chalk.green("demo.components")} or ${chalk.green(
@@ -63,7 +63,7 @@ export default class extends Generator {
 					}
 
 					if (parts.some(partInvalid)) {
-						return "Please use alpha-numeric characters only for both the namespace parts and the library name.";
+						return "Please use lower alpha-numeric characters only for both the namespace parts and the library name.";
 					}
 
 					return true;
