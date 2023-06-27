@@ -20,7 +20,7 @@
 	},
 	"devDependencies": {
 		"@ui5/cli": "^3.2.0",
-		"@ui5/tooling-webc": "^0.2.8",
+		"@ui5/tooling-webc": "^0.2.9",
 		"@ui5/webcomponents": "^1.14.3",
 		"@ui5/webcomponents-icons-business-suite": "^1.14.3",
 		"@ui5/webcomponents-icons-tnt": "^1.14.3",
