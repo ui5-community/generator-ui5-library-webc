@@ -35,7 +35,7 @@ export default class extends Generator {
 
 		const fwkInfo = {
 			OpenUI5: {
-				minVersion: "1.114.0", // <- minVersion for WebC enablement // "1.60.0",
+				minVersion: "1.116.0", // <- minVersion for WebC enablement // "1.60.0",
 				cdnDomain: "sdk.openui5.org",
 				npmPackage: "@openui5/sap.ui.core"
 			},
